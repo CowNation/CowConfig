@@ -21,6 +21,7 @@
 // 3. This notice may not be removed or altered from any source distribution.
 //
 ////////////////////////////////////////////////////////////
+
 #ifndef cppCConfig
 #define cppCConfig
 
@@ -51,6 +52,19 @@ public:
 		return (ReadConfig.is_open());
 	}
 	//////////////////
+	void WriteLine(std::string Text) {
+		if (ReadConfig.is_open())
+			ReadConfig.close(); //Close fstream file before writing to the file
+
+		if (FirstLine) {
+			WriteConfig.open(FileName);
+			FirstLine = false;
+		}
+
+		WriteConfig << Text << std::endl;
+
+		ReadConfig.open(FileName);
+	}
 	template <class c>
 	void WriteLine(std::string offsetText, c valToWrite) {
 		if (ReadConfig.is_open())
@@ -123,12 +137,37 @@ public:
 			return "";
 		}
 	}
+	bool bRead(std::string offsetText) {
+		std::string Line;
+		std::getline(ReadConfig, Line);
+
+		size_t pos = std::string::npos;
+		// Search for the substring in string in a loop untill nothing is found
+		while ((pos = Line.find(offsetText)) != std::string::npos)
+		{
+			// If found then erase it from string
+			Line.erase(pos, offsetText.length());
+		}
+
+		try {
+			return (Line == "1");
+		}
+		catch (...) {
+			return false;
+		}
+	}
 	//////////////////
 	bool CheckLine(std::string cLine) {
 		std::string Line;
 		std::getline(ReadConfig, Line);
 
 		return (Line == cLine);
+	}
+	//////////////////
+	void ClearFile() {
+		std::ofstream Clear;
+		Clear.open(FileName);
+		Clear.close();
 	}
 };
 
