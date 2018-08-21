@@ -45,7 +45,7 @@ public:
 			WriteConfig.close();
 	}
 	///////////////////
-	bool LoadFile(std::string fileName) {
+	bool OpenFile(std::string fileName) {
 		FileName = fileName;
 
 		ReadConfig.open(fileName);
