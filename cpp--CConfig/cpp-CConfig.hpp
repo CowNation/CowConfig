@@ -50,7 +50,7 @@ public:
 
 		ReadConfig.open(fileName);
 		return (ReadConfig.is_open());
-	}
+	} // Will open file with specified filename and will return whether the file is open
 	//////////////////
 	void WriteLine(std::string Text) {
 		if (ReadConfig.is_open())
@@ -162,13 +162,13 @@ public:
 		std::getline(ReadConfig, Line);
 
 		return (Line == cLine);
-	}
+	} // Will return whether the current line == std::string cLine
 	//////////////////
 	void ClearFile() {
 		std::ofstream Clear;
 		Clear.open(FileName);
 		Clear.close();
-	}
+	} // Will remove all lines of text from current opened file
 };
 
 #endif
