@@ -38,6 +38,9 @@ private:
 	std::string FileName;
 public:
 	CConfig() {}
+	CConfig(std::string fileName){
+		OpenFile(fileName);
+	}
 	~CConfig() {
 		if (ReadConfig.is_open())
 			ReadConfig.close();
