@@ -68,6 +68,19 @@ public:
 
 		ReadConfig.open(FileName);
 	}
+	void WriteLine(std::string offsetText, std::string valToWrite) {
+		if (ReadConfig.is_open())
+			ReadConfig.close(); //Close fstream file before writing to the file
+
+		if (FirstLine) {
+			WriteConfig.open(FileName);
+			FirstLine = false;
+		}
+
+		WriteConfig << offsetText << valToWrite << std::endl;
+
+		ReadConfig.open(FileName);
+	}
 	template <class c>
 	void WriteLine(std::string offsetText, c valToWrite) {
 		if (ReadConfig.is_open())
