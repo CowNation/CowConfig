@@ -30,12 +30,25 @@
 #include <string>
 #include <algorithm>
 
+/*
+  THIS WILL READ & WRITE LINE BY LINE! MAKE SURE YOU READ IN THE SAME ORDER AS YOU WRITE!
+*/
+
 class CConfig {
 private:
 	std::ofstream WriteConfig;
 	std::fstream ReadConfig;
 	bool FirstLine = true;
 	std::string FileName;
+  void RemoveSubStr(std::string substr, std::string& str){
+    size_t pos = std::string::npos;
+		// Search for the substring in string in a loop untill nothing is found
+		while ((pos = str.find(substr)) != std::string::npos)
+		{
+			// If found then erase it from string
+			str.erase(pos, substr.length());
+		}
+  }
 public:
 	CConfig() {}
 	CConfig(std::string fileName){
@@ -100,13 +113,7 @@ public:
 		std::string Line;
 		std::getline(ReadConfig, Line);
 
-		size_t pos = std::string::npos;
-		// Search for the substring in string in a loop untill nothing is found
-		while ((pos = Line.find(offsetText)) != std::string::npos)
-		{
-			// If found then erase it from string
-			Line.erase(pos, offsetText.length());
-		}
+    		RemoveSubStr(offsetText, Line);
 		try {
 			return stoi(Line);
 		}
@@ -118,14 +125,7 @@ public:
 	float fRead(std::string offsetText) {
 		std::string Line;
 		std::getline(ReadConfig, Line);
-
-		size_t pos = std::string::npos;
-		// Search for the substring in string in a loop untill nothing is found
-		while ((pos = Line.find(offsetText)) != std::string::npos)
-		{
-			// If found then erase it from string
-			Line.erase(pos, offsetText.length());
-		}
+    		RemoveSubStr(offsetText, Line);
 
 		try {
 			return stof(Line);
@@ -137,14 +137,7 @@ public:
 	std::string sRead(std::string offsetText) {
 		std::string Line;
 		std::getline(ReadConfig, Line);
-
-		size_t pos = std::string::npos;
-		// Search for the substring in string in a loop untill nothing is found
-		while ((pos = Line.find(offsetText)) != std::string::npos)
-		{
-			// If found then erase it from string
-			Line.erase(pos, offsetText.length());
-		}
+    		RemoveSubStr(offsetText, Line);
 
 		try {
 			return (Line);
@@ -156,14 +149,7 @@ public:
 	bool bRead(std::string offsetText) {
 		std::string Line;
 		std::getline(ReadConfig, Line);
-
-		size_t pos = std::string::npos;
-		// Search for the substring in string in a loop untill nothing is found
-		while ((pos = Line.find(offsetText)) != std::string::npos)
-		{
-			// If found then erase it from string
-			Line.erase(pos, offsetText.length());
-		}
+    		RemoveSubStr(offsetText, Line);
 
 		try {
 			return (Line == "1");
