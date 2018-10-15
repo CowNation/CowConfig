@@ -50,7 +50,7 @@ private:
 public:
 	CConfig() {}
 	CConfig(std::string fileName){
-		OpenFile(fileName);
+    OpenFile(fileName);
 	}
 	~CConfig() {
 		if (ReadConfig.is_open())
@@ -124,8 +124,9 @@ public:
       return 0;
     else{
       try{
-        RemoveSubStr(offsetText, Lines[LineFound]);
-        return stoi(Lines[LineFound]);
+        std::string temp = Lines[LineFound];
+        RemoveSubStr(offsetText, temp);
+        return stoi(temp);
       }
       catch (...){
         return 0;
@@ -144,8 +145,9 @@ public:
       return 0.0f;
     else{
       try{
-        RemoveSubStr(offsetText, Lines[LineFound]);
-        return stof(Lines[LineFound]);
+        std::string temp = Lines[LineFound];
+        RemoveSubStr(offsetText, temp);
+        return stof(temp);
       }
       catch (...){
         return 0.0f;
@@ -164,8 +166,9 @@ public:
       return "";
     else{
       try{
-        RemoveSubStr(offsetText, Lines[LineFound]);
-        return Lines[LineFound];
+        std::string temp = Lines[LineFound];
+        RemoveSubStr(offsetText, temp);
+        return temp;
       }
       catch (...){
         return "";
@@ -184,8 +187,9 @@ public:
       return false;
     else{
       try{
-        RemoveSubStr(offsetText, Lines[LineFound]);
-        return Lines[LineFound] == "1";
+        std::string temp = Lines[LineFound];
+        RemoveSubStr(offsetText, temp);
+        return temp == "1";
       }
       catch (...){
         return false;
@@ -214,12 +218,7 @@ void v2Test(){
   cfg.WriteLine("str_thing: ", (std::string)"L");
   cfg.Section("Integers");
   cfg.WriteLine("thing_stuff: ", 3);
-  cfg.WriteLine("stuff_things: ", 3);
-  cfg.Section("Floats");
-  cfg.WriteLine("float_thing: ", 17.38);
-  cfg.Section("Booleans");
-  cfg.WriteLine("bool_thing: ", true);
-  std::cout << cfg.sRead("Strings", "str_thing: ") << std::endl << cfg.iRead("Integers", "stuff_things: ") << std::endl << cfg.iRead("Integers", "thing_stuff: ") << std::endl << cfg.sRead("Strings", "string_thing: ");
+  std::cout << cfg.sRead("Strings", "str_thing: ") << std::endl << cfg.iRead("Integers", "thing_stuff: ") << std::endl << cfg.iRead("Integers", "thing_stuff: ") << std::endl << cfg.sRead("Strings", "string_thing: ");
 }
 
 #endif
