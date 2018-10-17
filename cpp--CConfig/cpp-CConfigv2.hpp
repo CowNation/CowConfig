@@ -38,6 +38,7 @@ private:
 	bool FirstLine = true, FirstRead = true;
 	std::string FileName;
   std::vector< std::string >Lines;
+  ///////////////////
   void RemoveSubStr(std::string substr, std::string& str){
     size_t pos = std::string::npos;
 		// Search for the substring in string in a loop untill nothing is found
@@ -47,23 +48,13 @@ private:
 			str.erase(pos, substr.length());
 		}
   }
+  ///////////////////
   void ReadAllLines(){
     std::string str;
     while (std::getline(ReadConfig, str)) {
       Lines.push_back(str);
     }
   }
-public:
-	CConfig() {}
-	CConfig(std::string fileName){
-    OpenFile(fileName);
-	}
-	~CConfig() {
-		if (ReadConfig.is_open())
-			ReadConfig.close();
-		if (WriteConfig.is_open())
-			WriteConfig.close();
-	}
   ///////////////////
   int FindElement(std::string Section, std::string offsetText){
     Section = "[" + Section + "]";
@@ -78,6 +69,18 @@ public:
     }
     return -1;
   }
+  ///////////////////
+public:
+	CConfig() {}
+	CConfig(std::string fileName){
+    OpenFile(fileName);
+	}
+	~CConfig() {
+		if (ReadConfig.is_open())
+			ReadConfig.close();
+		if (WriteConfig.is_open())
+			WriteConfig.close();
+	}
 	///////////////////
 	bool OpenFile(std::string fileName) {
 		FileName = fileName;
@@ -121,7 +124,6 @@ public:
 	int iRead(std::string Section, std::string offsetText) {
     if (FirstRead)
       ReadAllLines();
-    
     int LineFound = FindElement(Section, offsetText);
     if (LineFound == -1)
       return 0;
@@ -195,7 +197,7 @@ public:
 		std::ofstream Clear;
 		Clear.open(FileName);
 		Clear.close();
-	} // Will remove all lines of text from current opened file
+	}
 };
 
 void v2Test(){
