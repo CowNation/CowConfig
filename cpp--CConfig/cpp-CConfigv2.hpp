@@ -47,6 +47,12 @@ private:
 			str.erase(pos, substr.length());
 		}
   }
+  void ReadAllLines(){
+    std::string str;
+    while (std::getline(ReadConfig, str)) {
+      Lines.push_back(str);
+    }
+  }
 public:
 	CConfig() {}
 	CConfig(std::string fileName){
@@ -113,12 +119,9 @@ public:
   }
 	//////////////////
 	int iRead(std::string Section, std::string offsetText) {
-    if (FirstRead){
-      std::string str;
-      while (std::getline(ReadConfig, str)) {
-        Lines.push_back(str);
-      }
-    }
+    if (FirstRead)
+      ReadAllLines();
+    
     int LineFound = FindElement(Section, offsetText);
     if (LineFound == -1)
       return 0;
@@ -134,12 +137,9 @@ public:
     }
 	}
 	float fRead(std::string Section, std::string offsetText) {
-    if (FirstRead){
-      std::string str;
-      while (std::getline(ReadConfig, str)) {
-        Lines.push_back(str);
-      }
-    }
+    if (FirstRead)
+      ReadAllLines();
+
     int LineFound = FindElement(Section, offsetText);
     if (LineFound == -1)
       return 0.0f;
@@ -155,12 +155,9 @@ public:
     }
 	}
 	std::string sRead(std::string Section, std::string offsetText) {
-    if (FirstRead){
-      std::string str;
-      while (std::getline(ReadConfig, str)) {
-        Lines.push_back(str);
-      }
-    }
+    if (FirstRead)
+      ReadAllLines();
+
     int LineFound = FindElement(Section, offsetText);
     if (LineFound == -1)
       return "";
@@ -176,12 +173,9 @@ public:
     }
 	}
 	bool bRead(std::string Section, std::string offsetText) {
-    if (FirstRead){
-      std::string str;
-      while (std::getline(ReadConfig, str)) {
-        Lines.push_back(str);
-      }
-    }
+    if (FirstRead)
+      ReadAllLines();
+
     int LineFound = FindElement(Section, offsetText);
     if (LineFound == -1)
       return false;
@@ -196,13 +190,6 @@ public:
       }
     }
 	}
-	//////////////////
-	bool CheckLine(std::string cLine) {
-		std::string Line;
-		std::getline(ReadConfig, Line);
-
-		return (Line == cLine);
-	} // Will return whether the current line == std::string cLine
 	//////////////////
 	void ClearFile() {
 		std::ofstream Clear;
