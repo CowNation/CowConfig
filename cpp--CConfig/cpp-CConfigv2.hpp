@@ -60,12 +60,12 @@ public:
 	}
   ///////////////////
   int FindElement(std::string Section, std::string offsetText){
-    Section = "NEW_SECTION: [" + Section + "]";
+    Section = "[" + Section + "]";
     bool SectionFound;
     for (int i = 0; i < Lines.size(); i++){
       if (Lines[i] == Section)
         SectionFound = true;
-      else if (SectionFound && Lines[i].find("NEW_SECTION: [") != std::string::npos)
+      else if (SectionFound && Lines[i].find("[") != std::string::npos && Lines[i].find("]") != std::string::npos)
         break;
       if (SectionFound && Lines[i].find(offsetText) != std::string::npos)
         return i;
@@ -109,7 +109,7 @@ public:
 	}
   void Section(std::string SectionText) {
     SectionText = "[" + SectionText + "]";
-    WriteLine("NEW_SECTION: ", SectionText);
+    WriteLine("", SectionText);
   }
 	//////////////////
 	int iRead(std::string Section, std::string offsetText) {
