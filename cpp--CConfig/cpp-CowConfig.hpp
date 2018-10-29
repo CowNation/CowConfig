@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////
 //
-// cpp-CConfig
+// cpp-CowConfig
 // Copyright (C) 2018 CowCorp
 //
 // This software is provided 'as-is', without any express or implied warranty.
@@ -22,8 +22,8 @@
 //
 ////////////////////////////////////////////////////////////
 
-#ifndef cppCConfig
-#define cppCConfig
+#ifndef cppCowConfig
+#define cppCowConfig
 
 #include <iostream>
 #include <fstream>
@@ -31,7 +31,7 @@
 #include <vector>
 #include <algorithm>
 
-class CConfig {
+class CowConfig {
 private:
 	std::ofstream WriteConfig;
 	std::fstream ReadConfig;
@@ -71,11 +71,11 @@ private:
   }
   ///////////////////
 public:
-	CConfig() {}
-	CConfig(std::string fileName){
+	CowConfig() {}
+	CowConfig(std::string fileName){
     OpenFile(fileName);
 	}
-	~CConfig() {
+	~CowConfig() {
 		if (ReadConfig.is_open())
 			ReadConfig.close();
 		if (WriteConfig.is_open())
@@ -201,7 +201,7 @@ public:
 };
 
 void v2Test(){
-  CConfig cfg("test.txt");
+  CowConfig cfg("test.txt");
   cfg.Section("Strings");
   cfg.WriteLine("string_thing: ", (std::string)"T");
   cfg.WriteLine("str_thing: ", (std::string)"L");
