@@ -1,6 +1,6 @@
 # cpp-CowConfig
 
-CowConfig is a small, portable and simple file saver and parser that is mainly aimed at saving & parsing variables to/from a file.
+CowConfig is a small, portable, easy to use and simple file saver and parser that is mainly aimed at saving & parsing variables to/from a file.
 
 ## Functions
 CowConfig(std::string fileName) - Calls OpenFile with fileName as parameter on construction of object. (See bool OpenFile(std::string fileName))
