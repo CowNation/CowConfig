@@ -70,6 +70,11 @@ private:
     return -1;
   }
   ///////////////////
+	int Read(std::string Section, std::string offsetText){
+		if (FirstRead)
+      ReadAllLines();
+    return FindElement(Section, offsetText);
+	}
 public:
 	CowConfig() {}
 	CowConfig(std::string fileName){
@@ -88,6 +93,14 @@ public:
 		ReadConfig.open(fileName);
 		return (ReadConfig.is_open());
 	} // Will open file with specified filename and will return whether the file is open
+	//////////////////
+	std::vector< std::string > GetLines(){
+		std::string str;
+		std::vector< std::string > ret;
+    while (std::getline(ReadConfig, str))
+      ret.push_back(str);
+		return ret;
+	}
 	//////////////////
 	void WriteLine(std::string offsetText, std::string valToWrite) {
 		if (ReadConfig.is_open())
@@ -122,14 +135,12 @@ public:
   }
 	//////////////////
 	int iRead(std::string Section, std::string offsetText) {
-    if (FirstRead)
-      ReadAllLines();
-    int LineFound = FindElement(Section, offsetText);
-    if (LineFound == -1)
+		int _Read = Read(Section, offsetText);
+    if (_Read == -1)
       return 0;
     else{
       try{
-        std::string temp = Lines[LineFound];
+        std::string temp = Lines[_Read];
         RemoveSubStr(offsetText, temp);
         return stoi(temp);
       }
@@ -139,15 +150,12 @@ public:
     }
 	}
 	float fRead(std::string Section, std::string offsetText) {
-    if (FirstRead)
-      ReadAllLines();
-
-    int LineFound = FindElement(Section, offsetText);
-    if (LineFound == -1)
+		int _Read = Read(Section, offsetText);
+    if (_Read == -1)
       return 0.0f;
     else{
       try{
-        std::string temp = Lines[LineFound];
+        std::string temp = Lines[_Read];
         RemoveSubStr(offsetText, temp);
         return stof(temp);
       }
@@ -157,15 +165,12 @@ public:
     }
 	}
 	std::string sRead(std::string Section, std::string offsetText) {
-    if (FirstRead)
-      ReadAllLines();
-
-    int LineFound = FindElement(Section, offsetText);
-    if (LineFound == -1)
+		int _Read = Read(Section, offsetText);
+    if (_Read == -1)
       return "";
     else{
       try{
-        std::string temp = Lines[LineFound];
+        std::string temp = Lines[_Read];
         RemoveSubStr(offsetText, temp);
         return temp;
       }
@@ -175,15 +180,12 @@ public:
     }
 	}
 	bool bRead(std::string Section, std::string offsetText) {
-    if (FirstRead)
-      ReadAllLines();
-
-    int LineFound = FindElement(Section, offsetText);
-    if (LineFound == -1)
+		int _Read = Read(Section, offsetText);
+    if (_Read == -1)
       return false;
     else{
       try{
-        std::string temp = Lines[LineFound];
+        std::string temp = Lines[_Read];
         RemoveSubStr(offsetText, temp);
         return temp == "1";
       }
