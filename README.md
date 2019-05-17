@@ -6,3 +6,4 @@ CowConfig is a small, easy to use and simple file saver and parser that is mainl
 See cpp-CowConfig in action in these repos:
 
 https://github.com/CowNation/MooDB
+https://github.com/CowNation/cpp-CowSpeak
