@@ -18,7 +18,7 @@ namespace CowConfig{
 			Section = "[" + Section + "]";
 			bool SectionFound = false;
 			for (int i = 0; i < Lines.Count(); i++){
-				if (Lines[i] == Section)
+				if (Lines[i] == Section || Section == "[]")
 					SectionFound = true;
 				else if (SectionFound && Lines[i].IndexOf("[") != -1 && Lines[i].IndexOf("]") != -1)
 					break;
