@@ -57,7 +57,7 @@ private:
 		Section = "[" + Section + "]";
 		bool SectionFound;
 		for (int i = 0; i < Lines.size(); i++){
-			if (Lines[i] == Section)
+			if (Lines[i] == Section || Section == "[]")
 				SectionFound = true;
 			else if (SectionFound && Lines[i].find("[") != std::string::npos && Lines[i].find("]") != std::string::npos)
 				break;
