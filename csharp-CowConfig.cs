@@ -41,6 +41,10 @@ namespace CowConfig{
 			ReadAllLines(fileName);
 		}
 
+		public List< string > GetLines(){
+			return Lines;
+		}
+
 		public T Read<T>(string Section, string offsetText){
 			int lineIndex = FindElement(Section, offsetText);
 			if (lineIndex == -1)
