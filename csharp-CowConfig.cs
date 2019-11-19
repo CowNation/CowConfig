@@ -7,7 +7,7 @@ using System.Globalization;
 using System.Text;
 
 namespace CowConfig{
-	class readConfig{
+	class ReadConfig{
 		private List< string > Lines = new List< string >();
 
 		private void ReadAllLines(string FileName){
@@ -34,11 +34,11 @@ namespace CowConfig{
 			return (T)converter.ConvertFromString(null, CultureInfo.InvariantCulture, inValue);
 		}
 
-		public readConfig(string FileName){
-			if (!File.Exists(FileName))
-				throw new Exception(FileName + " does not exist");
+		public ReadConfig(string fileName){
+			if (!File.Exists(fileName))
+				throw new Exception(fileName + " does not exist");
 
-			ReadAllLines(FileName);
+			ReadAllLines(fileName);
 		}
 
 		public T Read<T>(string Section, string offsetText){
@@ -57,16 +57,16 @@ namespace CowConfig{
 		}
 	};
 
-	class writeConfig{
+	class WriteConfig{
 		private FileStream writeStream;
 
-		public writeConfig(string FileName){
-			if (!File.Exists(FileName))
-				File.Create(FileName).Close();
+		public WriteConfig(string fileName){
+			if (!File.Exists(fileName))
+				File.Create(fileName).Close();
 
-			writeStream = File.OpenWrite(FileName);
+			writeStream = File.OpenWrite(fileName);
 		}
-		~writeConfig(){
+		~WriteConfig(){
 			Close();
 		}
 
@@ -74,10 +74,10 @@ namespace CowConfig{
 			writeStream.Close();
 		}
 
-		private static void AddText(FileStream fs, string value)
+		private static void AddText(FileStream fileStream, string value)
 		{
 			byte[] info = new UTF8Encoding(true).GetBytes(value);
-			fs.Write(info, 0, info.Length);
+			fileStream.Write(info, 0, info.Length);
 		}
 
 		public void Section(string Text){
