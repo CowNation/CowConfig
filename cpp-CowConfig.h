@@ -42,14 +42,15 @@ private:
   	///////////////////
   	void RemoveSubStr(std::string substr, std::string& str){
     		size_t pos = std::string::npos;
+		
 		while ((pos = str.find(substr)) != std::string::npos)
 			str.erase(pos, substr.length());
   	}
   	///////////////////
   	void ReadAllLines(){
-		std::string str;
-		while (std::getline(ReadConfig, str))
-			Lines.push_back(str);
+    		std::string str;
+    		while (std::getline(ReadConfig, str))
+      			Lines.push_back(str);
   	}
   	///////////////////
   	int FindElement(std::string Section, std::string offsetText){
