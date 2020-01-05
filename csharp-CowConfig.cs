@@ -69,7 +69,7 @@ namespace CowConfig
 				return default(T);
 			}
 		}
-	};
+	}
 
 	class WriteConfig
 	{
@@ -108,5 +108,5 @@ namespace CowConfig
 		{
 			AddText(writeStream, offsetText + Item + "\n");
 		}
-	};
+	}
 }
