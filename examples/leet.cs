@@ -2,7 +2,7 @@ using System;
 
 class MainClass
 {
-  public static void Main (string[] args)
+ 	public static void Main (string[] args)
 	{
 		CowConfig.WriteConfig writeCfg = new CowConfig.WriteConfig("test.txt");
 		writeCfg.Section("Ints");
