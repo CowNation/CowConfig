@@ -13,7 +13,6 @@ class MainClass
 		writeCfg.Close();
 
 		CowConfig.ReadConfig readCfg = new CowConfig.ReadConfig("test.txt");
-		Console.WriteLine(readCfg.Read<string>("", "myn: "));
 		Console.WriteLine(readCfg.Read<string>("Strings", "ell: "));
 		Console.WriteLine(readCfg.Read<int>("Ints", "three: "));
 		Console.WriteLine(readCfg.Read<int>("Ints", "three: "));
