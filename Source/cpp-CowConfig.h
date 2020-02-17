@@ -99,7 +99,7 @@ public:
 		return ret;
 	}
 	//////////////////
-	void WriteLine(std::string offsetText, const char* valToWrite) {
+	void WriteLine(std::string offsetText, std::string valToWrite) {
 		if (ReadConfig.is_open())
 			ReadConfig.close(); //Close fstream file before writing to the file
 
@@ -112,7 +112,7 @@ public:
 
 		ReadConfig.open(FileName);
 	}
-	void WriteLine(std::string offsetText, std::string valToWrite) {
+	void WriteLine(std::string offsetText, const char* valToWrite) {
 		if (ReadConfig.is_open())
 			ReadConfig.close(); //Close fstream file before writing to the file
 

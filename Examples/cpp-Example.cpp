@@ -1,8 +1,8 @@
-#include "cpp-CowConfig.h"
+#include "../Source/cpp-CowConfig.h"
 #include <string>
 
 int main() {
-  CowConfig cfg("test.txt");
+	CowConfig cfg("test.txt");
 	cfg.Section("Ints");
 	cfg.WriteLine("three: ", "3");
 	cfg.Section("Strings");

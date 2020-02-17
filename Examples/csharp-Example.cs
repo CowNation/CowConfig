@@ -2,7 +2,7 @@ using System;
 
 class MainClass
 {
- 	public static void Main (string[] args)
+	public static void Main (string[] args)
 	{
 		CowConfig.WriteConfig writeCfg = new CowConfig.WriteConfig("test.txt");
 		writeCfg.Section("Ints");
@@ -13,6 +13,7 @@ class MainClass
 		writeCfg.Close();
 
 		CowConfig.ReadConfig readCfg = new CowConfig.ReadConfig("test.txt");
+		Console.WriteLine(readCfg.Read<string>("", "myn: "));
 		Console.WriteLine(readCfg.Read<string>("Strings", "ell: "));
 		Console.WriteLine(readCfg.Read<int>("Ints", "three: "));
 		Console.WriteLine(readCfg.Read<int>("Ints", "three: "));

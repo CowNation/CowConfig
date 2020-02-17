@@ -10,12 +10,9 @@ namespace CowConfig
 {
 	class ReadConfig
 	{
-		private List< string > Lines = new List< string >();
+		public List< string > Lines = new List< string >();
 
-		private void ReadAllLines(string FileName)
-		{
-			Lines = File.ReadAllLines(FileName).ToList();
-		}
+		private void ReadAllLines(string FileName) => Lines = File.ReadAllLines(FileName).ToList();
 
 		private int FindElement(string Section, string offsetText)
 		{
@@ -45,11 +42,6 @@ namespace CowConfig
 				throw new Exception(fileName + " does not exist");
 
 			ReadAllLines(fileName);
-		}
-
-		public List< string > GetLines()
-		{
-			return Lines;
 		}
 
 		public T Read<T>(string Section, string offsetText)
@@ -83,15 +75,9 @@ namespace CowConfig
 			writeStream = File.OpenWrite(fileName);
 		}
 
-		~WriteConfig()
-		{
-			Close();
-		}
+		~WriteConfig() => Close();
 
-		public void Close()
-		{
-			writeStream.Close();
-		}
+		public void Close() => writeStream.Close();
 
 		private static void AddText(FileStream fileStream, string value)
 		{
@@ -99,14 +85,8 @@ namespace CowConfig
 			fileStream.Write(info, 0, info.Length);
 		}
 
-		public void Section(string Text)
-		{
-			AddText(writeStream, "[" + Text + "]\n");
-		}
+		public void Section(string Text) => AddText(writeStream, "[" + Text + "]\n");
 
-		public void WriteLine(string offsetText, string Item)
-		{
-			AddText(writeStream, offsetText + Item + "\n");
-		}
+		public void WriteLine(string offsetText, string Item) => AddText(writeStream, offsetText + Item + "\n");
 	}
 }
