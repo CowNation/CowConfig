@@ -4,7 +4,7 @@ class MainClass
 {
 	public static void Main (string[] args)
 	{
-		CowConfig.WriteConfig writeCfg = new CowConfig.WriteConfig("test.txt");
+		CowConfig.WriteConfig writeCfg = new CowConfig.WriteConfig("Examples/test.txt");
 		writeCfg.Section("Ints");
 		writeCfg.WriteLine("three: ", 3.ToString());
 		writeCfg.Section("Strings");
@@ -12,7 +12,7 @@ class MainClass
 		writeCfg.WriteLine("tee: ", "T");
 		writeCfg.Close();
 
-		CowConfig.ReadConfig readCfg = new CowConfig.ReadConfig("test.txt");
+		CowConfig.ReadConfig readCfg = new CowConfig.ReadConfig("Examples/test.txt");
 		Console.WriteLine(readCfg.Read<string>("", "myn: "));
 		Console.WriteLine(readCfg.Read<string>("Strings", "ell: "));
 		Console.WriteLine(readCfg.Read<int>("Ints", "three: "));
