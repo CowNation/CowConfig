@@ -59,9 +59,9 @@ private:
 		for (int i = 0; i < Lines.size(); i++){
 			if (Lines[i] == Section || Section == "[]")
 				SectionFound = true;
-			else if (SectionFound && Lines[i].find("[") != std::string::npos && Lines[i].find("]") != std::string::npos)
+			else if (SectionFound && Lines[i].find("[") == 0 && Lines[i].find("]") > 0)
 				break;
-			if (SectionFound && Lines[i].find(offsetText) != std::string::npos)
+			if (SectionFound && Lines[i].find(offsetText) == 0)
 				return i;
 		}
 		return -1;
