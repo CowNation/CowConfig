@@ -22,9 +22,9 @@ namespace CowConfig
 			{
 				if (Lines[i] == Section || Section == "[]")
 					SectionFound = true;
-				else if (SectionFound && Lines[i].IndexOf("[") != -1 && Lines[i].IndexOf("]") != -1)
+				else if (SectionFound && Lines[i].IndexOf("[") == 0 && Lines[i].IndexOf("]") > 0)
 					break;
-				if (SectionFound && Lines[i].IndexOf(offsetText) != -1)
+				if (SectionFound && Lines[i].IndexOf(offsetText) == 0)
 					return i;
 			}
 			return -1;
