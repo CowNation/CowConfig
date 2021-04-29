@@ -55,7 +55,7 @@ private:
   	///////////////////
   	int FindElement(std::string Section, std::string offsetText){
 		Section = "[" + Section + "]";
-		bool SectionFound;
+		bool SectionFound = false;
 		for (int i = 0; i < Lines.size(); i++){
 			if (Lines[i] == Section || Section == "[]")
 				SectionFound = true;
