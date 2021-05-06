@@ -34,139 +34,139 @@
 
 class CowConfig {
 private:
-	std::ofstream WriteConfig;
-	std::fstream ReadConfig;
-	bool FirstLine = true, FirstRead = true;
-	std::string FileName;
-	std::vector< std::string >Lines;
-  	///////////////////
-  	void RemoveSubStr(std::string substr, std::string& str){
-    		size_t pos = std::string::npos;
-		
+	std::ofstream writeConfig;
+	std::fstream readConfig;
+	bool firstLine = true, firstRead = true;
+	std::string fileName;
+	std::vector< std::string > lines;
+	///////////////////
+	void RemoveSubStr(std::string substr, std::string& str) {
+		size_t pos = std::string::npos;
+
 		while ((pos = str.find(substr)) != std::string::npos)
 			str.erase(pos, substr.length());
-  	}
-  	///////////////////
-  	void ReadAllLines(){
-    		std::string str;
-    		while (std::getline(ReadConfig, str))
-      			Lines.push_back(str);
-  	}
-  	///////////////////
-  	int FindElement(std::string Section, std::string offsetText){
-		Section = "[" + Section + "]";
-		bool SectionFound = false;
-		for (int i = 0; i < Lines.size(); i++){
-			if (Lines[i] == Section || Section == "[]")
-				SectionFound = true;
-			else if (SectionFound && Lines[i].find("[") == 0 && Lines[i].find("]") > 0)
+	}
+	///////////////////
+	void ReadAllLines() {
+		std::string str;
+		while (std::getline(readConfig, str))
+			lines.push_back(str);
+	}
+	///////////////////
+	int FindElement(std::string section, std::string offsetText) {
+		if (firstRead)
+			ReadAllLines();
+
+		section = "[" + section + "]";
+		bool sectionFound = false;
+		for (int i = 0; i < lines.size(); i++) {
+			if (lines[i] == section || section == "[]")
+				sectionFound = true;
+			else if (sectionFound && lines[i].find("[") == 0 && lines[i].find("]") > 0)
 				break;
-			if (SectionFound && Lines[i].find(offsetText) == 0)
+			if (sectionFound && lines[i].find(offsetText) == 0)
 				return i;
 		}
 		return -1;
-  	}
-  	///////////////////
-	int pRead(std::string Section, std::string offsetText){
-		if (FirstRead)
-      			ReadAllLines();
-    		return FindElement(Section, offsetText);
 	}
 public:
 	CowConfig() {}
-	CowConfig(std::string fileName){
-    		OpenFile(fileName);
+	CowConfig(std::string fileName) {
+		OpenFile(fileName);
 	}
 	~CowConfig() {
-		if (ReadConfig.is_open())
-			ReadConfig.close();
-		if (WriteConfig.is_open())
-			WriteConfig.close();
+		if (readConfig.is_open())
+			readConfig.close();
+		if (writeConfig.is_open())
+			writeConfig.close();
 	}
 	///////////////////
 	bool OpenFile(std::string fileName) {
-		FileName = fileName;
+		fileName = fileName;
 
-		ReadConfig.open(fileName);
-		return (ReadConfig.is_open());
+		readConfig.open(fileName);
+		return (readConfig.is_open());
 	} // Will open file with specified filename and will return whether the file is open
 	//////////////////
-	std::vector< std::string > GetLines(){
+	std::vector< std::string > GetLines() {
 		std::string str;
 		std::vector< std::string > ret;
-    		while (std::getline(ReadConfig, str))
-      			ret.push_back(str);
+		while (std::getline(readConfig, str))
+			ret.push_back(str);
 		return ret;
 	}
 	//////////////////
 	void WriteLine(std::string offsetText, std::string valToWrite) {
-		if (ReadConfig.is_open())
-			ReadConfig.close(); //Close fstream file before writing to the file
+		if (readConfig.is_open())
+			readConfig.close(); //Close fstream file before writing to the file
 
-		if (FirstLine) {
-			WriteConfig.open(FileName);
-			FirstLine = false;
+		if (firstLine) {
+			writeConfig.open(fileName);
+			firstLine = false;
 		}
 
-		WriteConfig << offsetText << valToWrite << std::endl;
+		writeConfig << offsetText << valToWrite << std::endl;
 
-		ReadConfig.open(FileName);
+		readConfig.open(fileName);
 	}
 	void WriteLine(std::string offsetText, const char* valToWrite) {
-		if (ReadConfig.is_open())
-			ReadConfig.close(); //Close fstream file before writing to the file
+		if (readConfig.is_open())
+			readConfig.close(); // Close fstream file before writing to the file
 
-		if (FirstLine) {
-			WriteConfig.open(FileName);
-			FirstLine = false;
+		if (firstLine) {
+			writeConfig.open(fileName);
+			firstLine = false;
 		}
 
-		WriteConfig << offsetText << valToWrite << std::endl;
+		writeConfig << offsetText << valToWrite << std::endl;
 
-		ReadConfig.open(FileName);
+		readConfig.open(fileName);
 	}
 	template <class c>
 	void WriteLine(std::string offsetText, c valToWrite) {
-		if (ReadConfig.is_open())
-			ReadConfig.close(); //Close fstream file before writing to the file
+		if (readConfig.is_open())
+			readConfig.close(); // Close fstream file before writing to the file
 
-		if (FirstLine) {
-			WriteConfig.open(FileName);
-			FirstLine = false;
+		if (firstLine) {
+			writeConfig.open(fileName);
+			firstLine = false;
 		}
 
-		WriteConfig << offsetText << std::to_string(valToWrite) << std::endl;
+		writeConfig << offsetText << std::to_string(valToWrite) << std::endl;
 
-		ReadConfig.open(FileName);
+		readConfig.open(fileName);
 	}
-  	void Section(std::string SectionText) {
-		SectionText = "[" + SectionText + "]";
-    		WriteLine("", SectionText);
-  	}
+	void Section(std::string sectionText) {
+		sectionText = "[" + sectionText + "]";
+		WriteLine("", sectionText);
+	}
 	//////////////////
 	template <class T>
-	T Read(std::string Section, std::string offsetText){
-		int _Read = pRead(Section, offsetText);
-    		if (_Read == -1)
-      			return 0;
-    		else{
-      			try{
-        			std::string temp = Lines[_Read];
-        			RemoveSubStr(offsetText, temp);
+	T Read(std::string section, std::string offsetText) {
+		int elementIndex = FindElement(section, offsetText);
+
+		firstRead = false;
+
+		if (elementIndex == -1)
+			return 0;
+		else {
+			try {
+				std::string temp = lines[elementIndex];
+				RemoveSubStr(offsetText, temp);
 				T ret;
 				std::istringstream(temp) >> ret;
 				return ret;
-      			}
-      			catch (...){
-        			return T();
-      			}
-    		}
+			}
+			catch (...) {
+				return T();
+			}
+		}
 	}
 	//////////////////
 	void ClearFile() {
-		std::ofstream Clear;
-		Clear.open(FileName);
-		Clear.close();
+		std::ofstream clear;
+		clear.open(fileName);
+		clear.close();
 	}
 };
 #endif
